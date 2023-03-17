@@ -21,6 +21,7 @@ public class StartScene {
 	
 	private Button createButton(String text, int x, int y) {
 		Button button = new Button(text);
+		button.setId(text);
 		button.setPrefWidth(100);
 		button.setPrefHeight(50);
 		button.setTranslateX(x - 50);

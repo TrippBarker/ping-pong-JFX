@@ -1,6 +1,5 @@
 package application;
 	
-import application.controllers.*;
 import application.scenes.*;
 import javafx.application.Application;
 import javafx.stage.Stage;

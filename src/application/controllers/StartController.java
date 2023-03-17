@@ -3,8 +3,7 @@ package application.controllers;
 import java.io.IOException;
 
 import application.Main;
-import application.scenes.*;
-import javafx.collections.ObservableList;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -15,7 +14,6 @@ import javafx.stage.Stage;
 public class StartController {
 	private Scene scene;
 	private Stage stage;
-	private SceneSwitcher ss;
 	
 	public StartController(Scene scene, Stage stage) {
 		this.scene = scene;
@@ -24,7 +22,31 @@ public class StartController {
 	}
 	
 	public void addListeners() {
-		ObservableList<Node> nodes = scene.getRoot().getChildrenUnmodifiable();
-		Button startButton = (Button) nodes.get(0);
+		for (Node node : scene.getRoot().getChildrenUnmodifiable()) {
+			Button button = (Button) node;
+			button.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent e) {
+					switch(button.getId()) {
+					case "START":
+						try {
+							Main.ss.switchScene(stage, Main.playScene);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						break;
+					case "EXIT":
+						stage.close();
+						Platform.exit();
+						System.out.println("Buh-bye now");
+						break;
+					}
+				}
+				
+			});
+			
+		}
 	}
 }
