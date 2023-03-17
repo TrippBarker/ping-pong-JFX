@@ -1,14 +1,11 @@
 package application;
 	
-import application.controllers.StartController;
-import application.scenes.StartScene;
+import application.controllers.*;
+import application.scenes.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 
 
 public class Main extends Application {
@@ -20,12 +17,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage startStage) throws Exception {
 		Group root = new Group();
+		SceneSwitcher ss = new SceneSwitcher();
 		StartScene startScene = new StartScene();
 		Scene scene = startScene.buildScene(gridLenUnit, sceneHeight, sceneWidth, root);
+		StartController startCont = new StartController(scene, startStage);
 		startStage.setTitle("PING PONG");
 		startStage.setResizable(false);
-		startStage.setScene(scene);
-		startStage.show();
+		ss.switchScene(startStage, scene);
 	}
 	
 	public static void main(String[] args) {
