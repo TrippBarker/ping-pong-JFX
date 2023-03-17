@@ -2,6 +2,7 @@ package application.controllers;
 
 import java.io.IOException;
 
+import application.Main;
 import application.scenes.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,11 +26,5 @@ public class StartController {
 	public void addListeners() {
 		ObservableList<Node> nodes = scene.getRoot().getChildrenUnmodifiable();
 		Button startButton = (Button) nodes.get(0);
-		startButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("hello");
-			}
-		});
 	}
 }

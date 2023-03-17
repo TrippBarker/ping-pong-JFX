@@ -1,18 +1,21 @@
 package application.scenes;
 
+import application.Main;
+import application.controllers.StartController;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
 
 public class StartScene {
 	
-	public Scene buildScene(int gridLenUnit, int sceneHeight, int sceneWidth, Group root) {
+	public Scene buildScene(int gridLenUnit, int sceneHeight, int sceneWidth, Stage primaryStage) {
+		Group root = new Group();
 		root.getChildren().add(createButton("START", sceneWidth / 2, sceneHeight / 2));
 		root.getChildren().add(createButton("EXIT", sceneWidth / 2, (sceneHeight / 4) * 3));
 		Scene startScene = new Scene(root, sceneWidth, sceneHeight);
+		StartController startCont = new StartController(startScene, primaryStage);
 		return startScene;
 	}
 	
