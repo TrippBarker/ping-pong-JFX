@@ -1,5 +1,7 @@
 package application;
 	
+import application.controllers.StartController;
+import application.scenes.StartScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -7,13 +9,19 @@ import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
+	
+	public int gridLenUnit = 25;
+	public int sceneWidth = gridLenUnit * 40;
+	public int sceneHeight = gridLenUnit * 30;
+	
 	@Override
 	public void start(Stage startStage) throws Exception {
 		BorderPane root = new BorderPane();
-		Scene startScene = new Scene(root,1000,750);
+		StartScene startScene = new StartScene();
+		Scene scene = startScene.buildScene(gridLenUnit, sceneWidth, sceneHeight, root);
 		startStage.setTitle("PING PONG");
 		startStage.setResizable(false);
-		startStage.setScene(startScene);
+		startStage.setScene(scene);
 		startStage.show();
 	}
 	
