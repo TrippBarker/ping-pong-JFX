@@ -79,6 +79,7 @@ public class PlayController {
 	public void runGame() {
 		for (int i = 0; i < 2; i++) {
 			Rectangle pad = (Rectangle) nodes.get(i);
+			System.out.println("hello");
 			switch (actions[i]) {
 			case "":
 				pad.setTranslateY(pad.getTranslateY());
@@ -91,6 +92,21 @@ public class PlayController {
 				break;
 			default:
 				break;
+			}
+		}
+	}
+
+	public void startClock() {
+		boolean playing = true;
+		long lastLoopRunTime = System.nanoTime();
+		long targetFPS = 60;
+		long optimalTime = 1000000000 / targetFPS;
+		while (playing) {
+			long now = System.nanoTime();
+			long nowVSthen = now - lastLoopRunTime;
+			if (nowVSthen >= optimalTime) {
+				lastLoopRunTime = now;
+				runGame();
 			}
 		}
 	}
