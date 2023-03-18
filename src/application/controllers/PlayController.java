@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import application.Main;
 import application.scenes.SceneSwitcher;
+import javafx.animation.AnimationTimer;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -16,7 +17,7 @@ public class PlayController {
 	private Scene scene;
 	private Stage stage;
 	private SceneSwitcher ss;
-	private int padSpeed = 1;
+	private int padSpeed = 10;
 	private String[] actions = { "", "", "" };
 	private ObservableList<Node> nodes;
 
@@ -77,6 +78,13 @@ public class PlayController {
 				}
 			}
 		});
+		AnimationTimer timer = (new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				runGame();
+			}
+		});
+		timer.start();
 	}
 
 	public void runGame() {
@@ -87,28 +95,17 @@ public class PlayController {
 				pad.setTranslateY(pad.getTranslateY());
 				break;
 			case "up":
-				pad.setTranslateY(pad.getTranslateY() - padSpeed);
+				if (!(pad.getTranslateY() <= 0)) {
+					pad.setTranslateY(pad.getTranslateY() - padSpeed);
+				}
 				break;
 			case "down":
-				pad.setTranslateY(pad.getTranslateY() + padSpeed);
+				if (!(pad.getTranslateY() + pad.getHeight() >= scene.getHeight())) {
+					pad.setTranslateY(pad.getTranslateY() + padSpeed);
+				}
 				break;
 			default:
 				break;
-			}
-		}
-	}
-
-	public void startClock() {
-		boolean playing = true;
-		long lastLoopRunTime = System.nanoTime();
-		long targetFPS = 60;
-		long optimalTime = 1000000000 / targetFPS;
-		while (playing) {
-			long now = System.nanoTime();
-			long nowVSthen = now - lastLoopRunTime;
-			if (nowVSthen >= optimalTime) {
-				lastLoopRunTime = now;
-				runGame();
 			}
 		}
 	}
