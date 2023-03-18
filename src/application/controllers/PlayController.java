@@ -1,8 +1,5 @@
 package application.controllers;
 
-import java.io.IOException;
-
-import application.Main;
 import application.scenes.SceneSwitcher;
 import javafx.animation.AnimationTimer;
 import javafx.collections.ObservableList;

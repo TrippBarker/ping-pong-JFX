@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -22,6 +23,7 @@ public class PlayScene {
 		Group root = new Group();
 		root.getChildren().add(newPaddle("LEFT", 50, sceneHeight / 2));
 		root.getChildren().add(newPaddle("RIGHT", sceneWidth - 75, sceneHeight / 2));
+		root.getChildren().add(newBall("BALL", sceneWidth / 2, sceneHeight / 2));
 		root.getChildren().add(newScore("LEFTSCORE", 150, 0, Color.BLUE));
 		root.getChildren().add(newScore("RIGHTSCORE", sceneWidth - 300, 0, Color.RED));
 		Scene playScene = new Scene(root, sceneWidth, sceneHeight);
@@ -37,6 +39,16 @@ public class PlayScene {
 		paddle.setTranslateX(x);
 		paddle.setTranslateY(y - (paddle.getHeight()/2));
 		return paddle;
+	}
+	
+	private Circle newBall(String id, int x, int y) {
+		Circle ball = new Circle();
+		ball.setRadius(20);
+		ball.setId(id);
+		ball.setTranslateX(x);
+		ball.setTranslateY(y);
+		ball.setFill(Color.RED);
+		return ball;
 	}
 	
 	private Label newScore(String id, int x, int y, Color color) {
