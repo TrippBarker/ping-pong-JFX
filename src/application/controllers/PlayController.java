@@ -1,5 +1,8 @@
 package application.controllers;
 
+import java.io.IOException;
+
+import application.Main;
 import application.scenes.SceneSwitcher;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -79,7 +82,6 @@ public class PlayController {
 	public void runGame() {
 		for (int i = 0; i < 2; i++) {
 			Rectangle pad = (Rectangle) nodes.get(i);
-			System.out.println("hello");
 			switch (actions[i]) {
 			case "":
 				pad.setTranslateY(pad.getTranslateY());
