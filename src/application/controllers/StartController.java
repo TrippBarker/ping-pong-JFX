@@ -32,6 +32,7 @@ public class StartController {
 					case "START":
 						try {
 							Main.ss.switchScene(stage, Main.playScene);
+							Main.playSceneBuilder.playCont.runGame();
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

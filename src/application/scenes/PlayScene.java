@@ -14,6 +14,10 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class PlayScene {
+	
+	public PlayController playCont;
+	
+	
 	public Scene buildScene(int gridLenUnit, int sceneHeight, int sceneWidth, Stage primaryStage) {
 		Group root = new Group();
 		root.getChildren().add(newPaddle("LEFT", 50, sceneHeight / 2));
@@ -21,7 +25,7 @@ public class PlayScene {
 		root.getChildren().add(newScore("LEFTSCORE", 150, 0, Color.BLUE));
 		root.getChildren().add(newScore("RIGHTSCORE", sceneWidth - 300, 0, Color.RED));
 		Scene playScene = new Scene(root, sceneWidth, sceneHeight);
-		PlayController playCont = new PlayController(playScene, primaryStage);
+		playCont = new PlayController(playScene, primaryStage);
 		return playScene;
 	}
 	
@@ -46,6 +50,5 @@ public class PlayScene {
 		score.setTranslateX(x);
 		score.setTranslateY(y);
 		return score;
-	};
-	
+	}
 }
