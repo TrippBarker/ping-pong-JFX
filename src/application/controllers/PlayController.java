@@ -16,9 +16,9 @@ public class PlayController {
 	private Scene scene;
 	private Stage stage;
 	private SceneSwitcher ss;
-	private int padSpeed = 10;
-	private int ballXSpeed = 0;
-	private int ballYSpeed = 0;
+	private double padSpeed = 10;
+	private double ballXSpeed = 0;
+	private double ballYSpeed = 0;
 	private String[] actions = { "", "", "" };
 	private ObservableList<Node> nodes;
 	private int leftScore = 00;
@@ -130,52 +130,17 @@ public class PlayController {
 				break;
 			}
 			Circle ball = (Circle) nodes.get(2);
-			int ballYSpeedChange = 0;
 			if (ball.getTranslateX() + (ballXSpeed) + 20 <= 115 && ball.getTranslateX() + (ballXSpeed) + 20 >= 100) {
 				Rectangle leftPad = (Rectangle) nodes.get(0);
 				if (ball.getTranslateY() >= leftPad.getTranslateY() - 20 && ball.getTranslateY() <= leftPad.getTranslateY() + 175) {
-					ballXSpeed = 0 + Math.abs(ballXSpeed);
-					ballYSpeedChange = (int)ball.getTranslateY() - (int)leftPad.getTranslateY();
-					if (ballYSpeedChange < 25) {
-						ballYSpeed = -3;
-					} else if (ballYSpeedChange <= 50) {
-						ballYSpeed = -2;
-					} else if (ballYSpeedChange <= 65) {
-						ballYSpeed = -1;
-					} else if (ballYSpeedChange <= 85) {
-						ballYSpeed = 0;
-					} else if (ballYSpeedChange <= 100) {
-						ballYSpeed = 1;
-					} else if (ballYSpeedChange <= 125) {
-						ballYSpeed = 2;
-					} else {
-						ballYSpeed = 3;
-					}
-					bounces++;
+					updateBallTrajectory(ball.getTranslateY() - leftPad.getTranslateY());
 				}
 			}
 			
 			if (ball.getTranslateX() + (ballXSpeed) - 20 >= scene.getWidth() - 115 && ball.getTranslateX() + (ballXSpeed) - 20 <= scene.getWidth() - 100) {
 				Rectangle rightPad = (Rectangle) nodes.get(1);
 				if (ball.getTranslateY() >= rightPad.getTranslateY() - 20 && ball.getTranslateY() <= rightPad.getTranslateY() + 175) {
-					ballXSpeed = 0 - Math.abs(ballXSpeed);
-					ballYSpeedChange = (int)ball.getTranslateY() - (int)rightPad.getTranslateY();
-					if (ballYSpeedChange < 25) {
-						ballYSpeed = -3;
-					} else if (ballYSpeedChange <= 50) {
-						ballYSpeed = -2;
-					} else if (ballYSpeedChange <= 65) {
-						ballYSpeed = -1;
-					} else if (ballYSpeedChange <= 85) {
-						ballYSpeed = 0;
-					} else if (ballYSpeedChange <= 100) {
-						ballYSpeed = 1;
-					} else if (ballYSpeedChange <= 125) {
-						ballYSpeed = 2;
-					} else {
-						ballYSpeed = 3;
-					}
-					bounces++;
+					updateBallTrajectory(ball.getTranslateY() - rightPad.getTranslateY());
 				}
 			}
 			if (ball.getTranslateX() + (ballXSpeed) + 20 >= scene.getWidth()) {
@@ -207,5 +172,25 @@ public class PlayController {
 		Label rightLabel = (Label) nodes.get(4);
 		leftLabel.setText(String.valueOf(leftScore));
 		rightLabel.setText(String.valueOf(rightScore));
+	}
+	
+	public void updateBallTrajectory(double padSect) {
+		ballXSpeed *= -1;
+		if (padSect < 25) {
+			ballYSpeed = -3;
+		} else if (padSect <= 50) {
+			ballYSpeed = -2;
+		} else if (padSect <= 65) {
+			ballYSpeed = -1;
+		} else if (padSect <= 85) {
+			ballYSpeed = 0;
+		} else if (padSect <= 100) {
+			ballYSpeed = 1;
+		} else if (padSect <= 125) {
+			ballYSpeed = 2;
+		} else {
+			ballYSpeed = 3;
+		}
+		bounces++;
 	}
 }
