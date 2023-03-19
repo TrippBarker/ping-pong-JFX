@@ -1,5 +1,7 @@
 package application.controllers;
 
+import java.io.File;
+
 import application.scenes.SceneSwitcher;
 import javafx.animation.AnimationTimer;
 import javafx.collections.ObservableList;
@@ -8,6 +10,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -24,6 +28,9 @@ public class PlayController {
 	private int leftScore = 00;
 	private int rightScore = 00;
 	private int bounces = 0;
+	private Media leftSound = new Media(new File("src/application/sounds/leftSound.mp3").toURI().toString());
+	private Media rightSound = new Media(new File("src/application/sounds/rightSound.mp3").toURI().toString());
+	private MediaPlayer player;
 
 	public PlayController(Scene scene, Stage stage) {
 		this.scene = scene;
@@ -133,6 +140,7 @@ public class PlayController {
 			if (ball.getTranslateX() + (ballXSpeed) + 20 <= 115 && ball.getTranslateX() + (ballXSpeed) + 20 >= 100) {
 				Rectangle leftPad = (Rectangle) nodes.get(0);
 				if (ball.getTranslateY() >= leftPad.getTranslateY() - 20 && ball.getTranslateY() <= leftPad.getTranslateY() + 175) {
+					playSound(leftSound);
 					updateBallTrajectory(ball.getTranslateY() - leftPad.getTranslateY());
 				}
 			}
@@ -140,6 +148,7 @@ public class PlayController {
 			if (ball.getTranslateX() + (ballXSpeed) - 20 >= scene.getWidth() - 115 && ball.getTranslateX() + (ballXSpeed) - 20 <= scene.getWidth() - 100) {
 				Rectangle rightPad = (Rectangle) nodes.get(1);
 				if (ball.getTranslateY() >= rightPad.getTranslateY() - 20 && ball.getTranslateY() <= rightPad.getTranslateY() + 175) {
+					playSound(rightSound);
 					updateBallTrajectory(ball.getTranslateY() - rightPad.getTranslateY());
 				}
 			}
@@ -198,5 +207,10 @@ public class PlayController {
 			ballYSpeed = 3;
 		}
 		bounces++;
+	}
+	
+	public void playSound(Media sound) {
+		player = new MediaPlayer(sound);
+		player.play();
 	}
 }
