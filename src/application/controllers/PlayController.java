@@ -17,8 +17,8 @@ public class PlayController {
 	private Stage stage;
 	private SceneSwitcher ss;
 	private int padSpeed = 10;
-	private int ballXSpeed = 0;
-	private int ballYSpeed = 0;
+	private int ballXSpeed = -1;
+	private int ballYSpeed = 1;
 	private String[] actions = { "", "", "" };
 	private ObservableList<Node> nodes;
 	private int leftScore = 00;
@@ -111,7 +111,21 @@ public class PlayController {
 				break;
 			}
 			Circle ball = (Circle) nodes.get(2);
-			ball.setTranslateX(ball.getTranslateX() + (ballXSpeed));
+			if (ball.getTranslateX() + (ballXSpeed) + 20 >= scene.getWidth()) {
+				ball.setTranslateX(scene.getWidth() / 2);
+				leftScore++;
+			} else if (ball.getTranslateX() + (ballXSpeed) - 20 <= 0){
+				ball.setTranslateX(scene.getWidth() / 2);
+				rightScore++;
+			} else {
+				ball.setTranslateX(ball.getTranslateX() + (ballXSpeed));
+			}
+			
+			if (ball.getTranslateY() + (ballYSpeed) - 20 <= 0) {
+				ballYSpeed = 0 + Math.abs(ballYSpeed);
+			} else if (ball.getTranslateY() + (ballYSpeed) + 20 >= scene.getHeight() ) {
+				ballYSpeed = 0 - Math.abs(ballYSpeed);
+			}
 			ball.setTranslateY(ball.getTranslateY() + (ballYSpeed));
 		}
 		updateScores();
