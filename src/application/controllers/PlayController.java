@@ -17,8 +17,8 @@ public class PlayController {
 	private Stage stage;
 	private SceneSwitcher ss;
 	private int padSpeed = 10;
-	private int ballXSpeed = -1;
-	private int ballYSpeed = 1;
+	private int ballXSpeed = 0;
+	private int ballYSpeed = 0;
 	private String[] actions = { "", "", "" };
 	private ObservableList<Node> nodes;
 	private int leftScore = 00;
@@ -76,7 +76,17 @@ public class PlayController {
 					actions[1] = "";
 					break;
 				case "SPACE":
-					actions[2] = "";
+					if (ballXSpeed == 0) {
+						double num = Math.random();
+						if (num > .5) {
+							num = 1;
+						} else {
+							num = -1;
+						}
+						ballXSpeed = (int)num;
+						ballYSpeed = 0;
+						actions[2] = "";
+					}
 					break;
 				}
 			}
@@ -111,11 +121,59 @@ public class PlayController {
 				break;
 			}
 			Circle ball = (Circle) nodes.get(2);
+			int ballYSpeedChange = 0;
+			if (ball.getTranslateX() + (ballXSpeed) + 20 == 115) {
+				Rectangle leftPad = (Rectangle) nodes.get(0);
+				if (ball.getTranslateY() >= leftPad.getTranslateY() && ball.getTranslateY() <= leftPad.getTranslateY() + 150) {
+					ballXSpeed = 0 + Math.abs(ballXSpeed);
+					ballYSpeedChange = (int)ball.getTranslateY() - (int)leftPad.getTranslateY();
+					if (ballYSpeedChange < 25) {
+						ballYSpeed = -3;
+					} else if (ballYSpeedChange <= 50) {
+						ballYSpeed = -2;
+					} else if (ballYSpeedChange <= 65) {
+						ballYSpeed = -1;
+					} else if (ballYSpeedChange <= 85) {
+						ballYSpeed = 0;
+					} else if (ballYSpeedChange <= 100) {
+						ballYSpeed = 1;
+					} else if (ballYSpeedChange <= 125) {
+						ballYSpeed = 2;
+					} else {
+						ballYSpeed = 3;
+					}
+				}
+			}
+			
+			if (ball.getTranslateX() + (ballXSpeed) - 20 == scene.getWidth() - 115) {
+				Rectangle rightPad = (Rectangle) nodes.get(1);
+				if (ball.getTranslateY() >= rightPad.getTranslateY() && ball.getTranslateY() <= rightPad.getTranslateY() + 150) {
+					ballXSpeed = 0 - Math.abs(ballXSpeed);
+					ballYSpeedChange = (int)ball.getTranslateY() - (int)rightPad.getTranslateY();
+					if (ballYSpeedChange < 25) {
+						ballYSpeed = -3;
+					} else if (ballYSpeedChange <= 50) {
+						ballYSpeed = -2;
+					} else if (ballYSpeedChange <= 65) {
+						ballYSpeed = -1;
+					} else if (ballYSpeedChange <= 85) {
+						ballYSpeed = 0;
+					} else if (ballYSpeedChange <= 100) {
+						ballYSpeed = 1;
+					} else if (ballYSpeedChange <= 125) {
+						ballYSpeed = 2;
+					} else {
+						ballYSpeed = 3;
+					}
+				}
+			}
 			if (ball.getTranslateX() + (ballXSpeed) + 20 >= scene.getWidth()) {
 				ball.setTranslateX(scene.getWidth() / 2);
+				ballXSpeed = 0 - Math.abs(ballXSpeed);
 				leftScore++;
 			} else if (ball.getTranslateX() + (ballXSpeed) - 20 <= 0){
 				ball.setTranslateX(scene.getWidth() / 2);
+				ballXSpeed = 0 + Math.abs(ballXSpeed);
 				rightScore++;
 			} else {
 				ball.setTranslateX(ball.getTranslateX() + (ballXSpeed));

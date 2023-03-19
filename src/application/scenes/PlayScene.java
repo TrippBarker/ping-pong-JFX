@@ -62,6 +62,7 @@ public class PlayScene {
 		score.setAlignment(Pos.CENTER);
 		score.setTranslateX(x);
 		score.setTranslateY(y);
+		score.setOpacity(.5);
 		return score;
 	}
 }
