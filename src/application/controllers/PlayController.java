@@ -145,12 +145,18 @@ public class PlayController {
 			}
 			if (ball.getTranslateX() + (ballXSpeed) + 20 >= scene.getWidth()) {
 				ball.setTranslateX(scene.getWidth() / 2);
-				ballXSpeed = -2;
+				ballXSpeed = 0 - (Math.abs(ballXSpeed) - 2);
+				if (ballXSpeed > -2 ) {
+					ballXSpeed = -2;
+				}
 				leftScore++;
 				bounces = 0;
 			} else if (ball.getTranslateX() + (ballXSpeed) - 20 <= 0){
 				ball.setTranslateX(scene.getWidth() / 2);
-				ballXSpeed = 2;
+				ballXSpeed = 0 + (Math.abs(ballXSpeed) - 2);
+				if (ballXSpeed < 2) {
+					ballXSpeed = 2;
+				}
 				rightScore++;
 				bounces = 0;
 			} else {
