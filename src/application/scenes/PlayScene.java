@@ -21,8 +21,8 @@ public class PlayScene {
 	
 	public Scene buildScene(int gridLenUnit, int sceneHeight, int sceneWidth, Stage primaryStage) {
 		Group root = new Group();
-		root.getChildren().add(newPaddle("LEFT", 50, sceneHeight / 2));
-		root.getChildren().add(newPaddle("RIGHT", sceneWidth - 75, sceneHeight / 2));
+		root.getChildren().add(newPaddle("LEFT", 50, sceneHeight / 2, Color.DEEPSKYBLUE));
+		root.getChildren().add(newPaddle("RIGHT", sceneWidth - 75, sceneHeight / 2, Color.HOTPINK));
 		root.getChildren().add(newBall("BALL", sceneWidth / 2, sceneHeight / 2));
 		root.getChildren().add(newScore("LEFTSCORE", 150, 0, Color.BLUE));
 		root.getChildren().add(newScore("RIGHTSCORE", sceneWidth - 300, 0, Color.RED));
@@ -31,8 +31,9 @@ public class PlayScene {
 		return playScene;
 	}
 	
-	private Rectangle newPaddle(String id, int x, int y) {
+	private Rectangle newPaddle(String id, int x, int y, Color color) {
 		Rectangle paddle = new Rectangle();
+		paddle.setFill(color);
 		paddle.setWidth(25);
 		paddle.setHeight(150);
 		paddle.setId(id);

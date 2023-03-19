@@ -6,7 +6,9 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -15,8 +17,12 @@ public class PlayController {
 	private Stage stage;
 	private SceneSwitcher ss;
 	private int padSpeed = 10;
+	private int ballXSpeed = 0;
+	private int ballYSpeed = 0;
 	private String[] actions = { "", "", "" };
 	private ObservableList<Node> nodes;
+	private int leftScore = 00;
+	private int rightScore = 00;
 
 	public PlayController(Scene scene, Stage stage) {
 		this.scene = scene;
@@ -104,6 +110,17 @@ public class PlayController {
 			default:
 				break;
 			}
+			Circle ball = (Circle) nodes.get(2);
+			ball.setTranslateX(ball.getTranslateX() + (ballXSpeed));
+			ball.setTranslateY(ball.getTranslateY() + (ballYSpeed));
 		}
+		updateScores();
+	}
+	
+	public void updateScores() {
+		Label leftLabel = (Label)nodes.get(3);
+		Label rightLabel = (Label) nodes.get(4);
+		leftLabel.setText(String.valueOf(leftScore));
+		rightLabel.setText(String.valueOf(rightScore));
 	}
 }
