@@ -23,6 +23,7 @@ public class PlayController {
 	private ObservableList<Node> nodes;
 	private int leftScore = 00;
 	private int rightScore = 00;
+	private int bounces = 0;
 
 	public PlayController(Scene scene, Stage stage) {
 		this.scene = scene;
@@ -79,9 +80,9 @@ public class PlayController {
 					if (ballXSpeed == 0) {
 						double num = Math.random();
 						if (num > .5) {
-							num = 1;
+							num = 2;
 						} else {
-							num = -1;
+							num = -2;
 						}
 						ballXSpeed = (int)num;
 						ballYSpeed = 0;
@@ -101,6 +102,14 @@ public class PlayController {
 	}
 
 	public void runGame() {
+		if (bounces == 3 && Math.abs(ballXSpeed) < 10) {
+			if (ballXSpeed < 0) {
+				ballXSpeed--;
+			} else {
+				ballXSpeed++;
+			}
+			bounces = 0;
+		}
 		for (int i = 0; i < 2; i++) {
 			Rectangle pad = (Rectangle) nodes.get(i);
 			switch (actions[i]) {
@@ -122,7 +131,7 @@ public class PlayController {
 			}
 			Circle ball = (Circle) nodes.get(2);
 			int ballYSpeedChange = 0;
-			if (ball.getTranslateX() + (ballXSpeed) + 20 == 115) {
+			if (ball.getTranslateX() + (ballXSpeed) + 20 <= 115 && ball.getTranslateX() + (ballXSpeed) + 20 >= 100) {
 				Rectangle leftPad = (Rectangle) nodes.get(0);
 				if (ball.getTranslateY() >= leftPad.getTranslateY() && ball.getTranslateY() <= leftPad.getTranslateY() + 150) {
 					ballXSpeed = 0 + Math.abs(ballXSpeed);
@@ -142,10 +151,11 @@ public class PlayController {
 					} else {
 						ballYSpeed = 3;
 					}
+					bounces++;
 				}
 			}
 			
-			if (ball.getTranslateX() + (ballXSpeed) - 20 == scene.getWidth() - 115) {
+			if (ball.getTranslateX() + (ballXSpeed) - 20 >= scene.getWidth() - 115 && ball.getTranslateX() + (ballXSpeed) - 20 <= scene.getWidth() - 100) {
 				Rectangle rightPad = (Rectangle) nodes.get(1);
 				if (ball.getTranslateY() >= rightPad.getTranslateY() && ball.getTranslateY() <= rightPad.getTranslateY() + 150) {
 					ballXSpeed = 0 - Math.abs(ballXSpeed);
@@ -165,16 +175,19 @@ public class PlayController {
 					} else {
 						ballYSpeed = 3;
 					}
+					bounces++;
 				}
 			}
 			if (ball.getTranslateX() + (ballXSpeed) + 20 >= scene.getWidth()) {
 				ball.setTranslateX(scene.getWidth() / 2);
-				ballXSpeed = 0 - Math.abs(ballXSpeed);
+				ballXSpeed = -2;
 				leftScore++;
+				bounces = 0;
 			} else if (ball.getTranslateX() + (ballXSpeed) - 20 <= 0){
 				ball.setTranslateX(scene.getWidth() / 2);
-				ballXSpeed = 0 + Math.abs(ballXSpeed);
+				ballXSpeed = 2;
 				rightScore++;
+				bounces = 0;
 			} else {
 				ball.setTranslateX(ball.getTranslateX() + (ballXSpeed));
 			}
