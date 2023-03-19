@@ -27,6 +27,7 @@ public class PlayScene {
 		root.getChildren().add(newScore("LEFTSCORE", 150, 0, Color.BLUE));
 		root.getChildren().add(newScore("RIGHTSCORE", sceneWidth - 300, 0, Color.RED));
 		Scene playScene = new Scene(root, sceneWidth, sceneHeight);
+		playScene.setFill(Color.DARKSLATEGREY);
 		playCont = new PlayController(playScene, primaryStage);
 		return playScene;
 	}

@@ -133,7 +133,7 @@ public class PlayController {
 			int ballYSpeedChange = 0;
 			if (ball.getTranslateX() + (ballXSpeed) + 20 <= 115 && ball.getTranslateX() + (ballXSpeed) + 20 >= 100) {
 				Rectangle leftPad = (Rectangle) nodes.get(0);
-				if (ball.getTranslateY() >= leftPad.getTranslateY() && ball.getTranslateY() <= leftPad.getTranslateY() + 150) {
+				if (ball.getTranslateY() >= leftPad.getTranslateY() - 20 && ball.getTranslateY() <= leftPad.getTranslateY() + 175) {
 					ballXSpeed = 0 + Math.abs(ballXSpeed);
 					ballYSpeedChange = (int)ball.getTranslateY() - (int)leftPad.getTranslateY();
 					if (ballYSpeedChange < 25) {
@@ -157,7 +157,7 @@ public class PlayController {
 			
 			if (ball.getTranslateX() + (ballXSpeed) - 20 >= scene.getWidth() - 115 && ball.getTranslateX() + (ballXSpeed) - 20 <= scene.getWidth() - 100) {
 				Rectangle rightPad = (Rectangle) nodes.get(1);
-				if (ball.getTranslateY() >= rightPad.getTranslateY() && ball.getTranslateY() <= rightPad.getTranslateY() + 150) {
+				if (ball.getTranslateY() >= rightPad.getTranslateY() - 20 && ball.getTranslateY() <= rightPad.getTranslateY() + 175) {
 					ballXSpeed = 0 - Math.abs(ballXSpeed);
 					ballYSpeedChange = (int)ball.getTranslateY() - (int)rightPad.getTranslateY();
 					if (ballYSpeedChange < 25) {
