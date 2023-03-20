@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -40,16 +41,22 @@ public class PlayController {
 	private Button againButton;
 	private Button endButton;
 	private Label gameOverMessage;
+	private Label spaceToStartMessage;
+	private double startMessageOp = 0.5;
+	private boolean decreasing = false;
 	private boolean playing = true;
 
 	public PlayController(Scene scene, Stage stage) {
 		this.scene = scene;
 		this.stage = stage;
 		this.nodes = scene.getRoot().getChildrenUnmodifiable();
-		gameOverScreen = (Rectangle)nodes.get(5);
-		againButton = (Button)nodes.get(6);
-		endButton = (Button)nodes.get(7);
-		gameOverMessage = (Label)nodes.get(8);
+		spaceToStartMessage = (Label)nodes.get(5);
+		spaceToStartMessage.setText("SPACE TO\n  PLAY");
+		spaceToStartMessage.setTextFill(Color.WHITE);
+		gameOverScreen = (Rectangle)nodes.get(6);
+		againButton = (Button)nodes.get(7);
+		endButton = (Button)nodes.get(8);
+		gameOverMessage = (Label)nodes.get(9);
 		addListeners();
 	}
 
@@ -147,6 +154,26 @@ public class PlayController {
 	}
 
 	public void runGame() {
+		if(ballXSpeed == 0 && playing) {
+			spaceToStartMessage.setVisible(true);
+			spaceToStartMessage.setOpacity(startMessageOp);
+			System.out.println(startMessageOp);
+			if (startMessageOp >= .99 || startMessageOp > .25 && decreasing) {
+				System.out.println("1");
+				if (startMessageOp >= .99 && !decreasing) {
+					decreasing = true;
+				}
+				startMessageOp -= .01;
+			} else {
+				System.out.println("2");
+				decreasing = false;
+				startMessageOp += .01;
+			}
+			
+			
+		} else {
+			spaceToStartMessage.setVisible(false);
+		}
 		if (bounces == 3 && Math.abs(ballXSpeed) < 10) {
 			if (ballXSpeed < 0) {
 				ballXSpeed--;

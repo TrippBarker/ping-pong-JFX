@@ -27,6 +27,7 @@ public class PlayScene {
 		root.getChildren().add(newBall("BALL", sceneWidth / 2, sceneHeight / 2));
 		root.getChildren().add(newScore("LEFTSCORE", 150, 0, Color.BLUE));
 		root.getChildren().add(newScore("RIGHTSCORE", sceneWidth - 300, 0, Color.RED));
+		root.getChildren().add(newLabel("SPACETOSTART", (sceneWidth / 2) - 250, 150));
 		root.getChildren().add(gameOver("GAMEOVER", 25, 100, Color.SLATEGREY, sceneWidth, sceneHeight));
 		root.getChildren().add(newButton("AGAIN", (sceneWidth / 2) - 150, sceneHeight / 2));
 		root.getChildren().add(newButton("END", (sceneWidth / 2) + 50, sceneHeight / 2));
@@ -102,7 +103,7 @@ public class PlayScene {
 		label.setAlignment(Pos.CENTER);
 		label.setId(id);
 		label.setPrefWidth(500);
-		label.setPrefHeight(150);
+		label.setPrefHeight(175);
 		label.setTranslateX(x);
 		label.setTranslateY(y);
 		label.setVisible(false);
