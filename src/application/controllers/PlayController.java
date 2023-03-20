@@ -4,10 +4,13 @@ import java.io.File;
 
 import application.scenes.SceneSwitcher;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
@@ -25,17 +28,26 @@ public class PlayController {
 	private double ballYSpeed = 0;
 	private String[] actions = { "", "", "" };
 	private ObservableList<Node> nodes;
-	private int leftScore = 00;
-	private int rightScore = 00;
+	private int leftScore = 0;
+	private int rightScore = 0;
 	private int bounces = 0;
 	private Media leftSound = new Media(new File("src/application/sounds/leftSound.mp3").toURI().toString());
 	private Media rightSound = new Media(new File("src/application/sounds/rightSound.mp3").toURI().toString());
 	private MediaPlayer player;
+	private Rectangle gameOverScreen;
+	private Button againButton;
+	private Button endButton;
+	private Label gameOverMessage;
+	private boolean playing = true;
 
 	public PlayController(Scene scene, Stage stage) {
 		this.scene = scene;
 		this.stage = stage;
 		this.nodes = scene.getRoot().getChildrenUnmodifiable();
+		gameOverScreen = (Rectangle)nodes.get(5);
+		againButton = (Button)nodes.get(6);
+		endButton = (Button)nodes.get(7);
+		gameOverMessage = (Label)nodes.get(8);
 		addListeners();
 	}
 
@@ -84,7 +96,7 @@ public class PlayController {
 					actions[1] = "";
 					break;
 				case "SPACE":
-					if (ballXSpeed == 0) {
+					if (ballXSpeed == 0 && playing) {
 						double num = Math.random();
 						if (num > .5) {
 							num = 2;
@@ -98,6 +110,30 @@ public class PlayController {
 					break;
 				}
 			}
+		});
+		againButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				gameOverScreen.setVisible(false);
+				againButton.setVisible(false);
+				endButton.setVisible(false);
+				gameOverMessage.setVisible(false);
+				leftScore = 0;
+				rightScore = 0;
+				playing = true;
+			}
+			
+		});
+		endButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				stage.close();
+				Platform.exit();
+				System.out.println("later gator");
+			}
+			
 		});
 		AnimationTimer timer = (new AnimationTimer() {
 			@Override
@@ -159,6 +195,9 @@ public class PlayController {
 					ballXSpeed = -2;
 				}
 				leftScore++;
+				if (leftScore == 10) {
+					gameOver("BLUE");
+				}
 				bounces = 0;
 			} else if (ball.getTranslateX() + (ballXSpeed) - 20 <= 0){
 				ball.setTranslateX(scene.getWidth() / 2);
@@ -167,6 +206,9 @@ public class PlayController {
 					ballXSpeed = 2;
 				}
 				rightScore++;
+				if (rightScore == 10) {
+					gameOver("RED");
+				}
 				bounces = 0;
 			} else {
 				ball.setTranslateX(ball.getTranslateX() + (ballXSpeed));
@@ -212,5 +254,16 @@ public class PlayController {
 	public void playSound(Media sound) {
 		player = new MediaPlayer(sound);
 		player.play();
+	}
+	
+	public void gameOver(String winner) {
+		ballXSpeed = 0;
+		ballYSpeed = 0;
+		gameOverScreen.setVisible(true);
+		againButton.setVisible(true);
+		endButton.setVisible(true);
+		gameOverMessage.setVisible(true);
+		gameOverMessage.setText(winner + " WINS");
+		playing = false;
 	}
 }

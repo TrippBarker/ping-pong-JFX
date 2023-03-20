@@ -4,6 +4,7 @@ import application.controllers.PlayController;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -26,8 +27,12 @@ public class PlayScene {
 		root.getChildren().add(newBall("BALL", sceneWidth / 2, sceneHeight / 2));
 		root.getChildren().add(newScore("LEFTSCORE", 150, 0, Color.BLUE));
 		root.getChildren().add(newScore("RIGHTSCORE", sceneWidth - 300, 0, Color.RED));
+		root.getChildren().add(gameOver("GAMEOVER", 25, 100, Color.SLATEGREY, sceneWidth, sceneHeight));
+		root.getChildren().add(newButton("AGAIN", (sceneWidth / 2) - 150, sceneHeight / 2));
+		root.getChildren().add(newButton("END", (sceneWidth / 2) + 50, sceneHeight / 2));
+		root.getChildren().add(newLabel("GAMEOVERLABEL", (sceneWidth / 2) - 250, 150));
 		Scene playScene = new Scene(root, sceneWidth, sceneHeight);
-		playScene.setFill(Color.DARKSLATEGREY);
+		playScene.setFill(Color.DARKSLATEGRAY);
 		playCont = new PlayController(playScene, primaryStage);
 		return playScene;
 	}
@@ -65,5 +70,42 @@ public class PlayScene {
 		score.setTranslateY(y);
 		score.setOpacity(.5);
 		return score;
+	}
+	
+	private Rectangle gameOver(String id, int x, int y, Color color, int sceneWidth, int sceneHeight) {
+		Rectangle over = new Rectangle();
+		over.setId(id);
+		over.setWidth(sceneWidth - (x*2));
+		over.setHeight(sceneHeight - y - 25);
+		over.setFill(color);
+		over.setTranslateX(x);
+		over.setTranslateY(y);
+		over.setVisible(false);
+		return over;
+	}
+	
+	private Button newButton(String id, int x, int y) {
+		Button button = new Button();
+		button.setId(id);
+		button.setText(id);
+		button.setTranslateX(x);
+		button.setTranslateY(y);
+		button.setPrefWidth(100);
+		button.setPrefHeight(50);
+		button.setVisible(false);
+		return button;
+	}
+	
+	private Label newLabel(String id, int x, int y) {
+		Label label = new Label();
+		label.setFont(Font.font("courier new", FontWeight.BOLD, 74));
+		label.setAlignment(Pos.CENTER);
+		label.setId(id);
+		label.setPrefWidth(500);
+		label.setPrefHeight(150);
+		label.setTranslateX(x);
+		label.setTranslateY(y);
+		label.setVisible(false);
+		return label;
 	}
 }
