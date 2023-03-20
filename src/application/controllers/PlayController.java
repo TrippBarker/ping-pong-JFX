@@ -33,6 +33,8 @@ public class PlayController {
 	private int bounces = 0;
 	private Media leftSound = new Media(new File("src/application/sounds/leftSound.mp3").toURI().toString());
 	private Media rightSound = new Media(new File("src/application/sounds/rightSound.mp3").toURI().toString());
+	private Media wallSound = new Media(new File("src/application/sounds/wallSound.mp3").toURI().toString());
+	private Media zzzSound = new Media(new File("src/application/sounds/zzzSound.mp3").toURI().toString());
 	private MediaPlayer player;
 	private Rectangle gameOverScreen;
 	private Button againButton;
@@ -173,7 +175,7 @@ public class PlayController {
 				break;
 			}
 			Circle ball = (Circle) nodes.get(2);
-			if (ball.getTranslateX() + (ballXSpeed) + 20 <= 115 && ball.getTranslateX() + (ballXSpeed) + 20 >= 100) {
+			if (ball.getTranslateX() + (ballXSpeed) + 20 <= 115 && ball.getTranslateX() + (ballXSpeed) + 20 >= 50) {
 				Rectangle leftPad = (Rectangle) nodes.get(0);
 				if (ball.getTranslateY() >= leftPad.getTranslateY() - 20 && ball.getTranslateY() <= leftPad.getTranslateY() + 175) {
 					playSound(leftSound);
@@ -181,7 +183,7 @@ public class PlayController {
 				}
 			}
 			
-			if (ball.getTranslateX() + (ballXSpeed) - 20 >= scene.getWidth() - 115 && ball.getTranslateX() + (ballXSpeed) - 20 <= scene.getWidth() - 100) {
+			if (ball.getTranslateX() + (ballXSpeed) - 20 >= scene.getWidth() - 115 && ball.getTranslateX() + (ballXSpeed) - 20 <= scene.getWidth() - 50) {
 				Rectangle rightPad = (Rectangle) nodes.get(1);
 				if (ball.getTranslateY() >= rightPad.getTranslateY() - 20 && ball.getTranslateY() <= rightPad.getTranslateY() + 175) {
 					playSound(rightSound);
@@ -194,6 +196,7 @@ public class PlayController {
 				if (ballXSpeed > -2 ) {
 					ballXSpeed = -2;
 				}
+				playSound(zzzSound);
 				leftScore++;
 				if (leftScore == 10) {
 					gameOver("BLUE");
@@ -205,6 +208,7 @@ public class PlayController {
 				if (ballXSpeed < 2) {
 					ballXSpeed = 2;
 				}
+				playSound(zzzSound);
 				rightScore++;
 				if (rightScore == 10) {
 					gameOver("RED");
@@ -216,8 +220,10 @@ public class PlayController {
 			
 			if (ball.getTranslateY() + (ballYSpeed) - 20 <= 0) {
 				ballYSpeed = 0 + Math.abs(ballYSpeed);
+				playSound(wallSound);
 			} else if (ball.getTranslateY() + (ballYSpeed) + 20 >= scene.getHeight() ) {
 				ballYSpeed = 0 - Math.abs(ballYSpeed);
+				playSound(wallSound);
 			}
 			ball.setTranslateY(ball.getTranslateY() + (ballYSpeed));
 		}
